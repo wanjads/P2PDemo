@@ -1,21 +1,36 @@
-from kivy.uix.button import Button
+import kivy
 from kivy.app import App
-from functools import partial
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.image import Image
+from kivy.graphics import Color, Rectangle
 
 
-class KivyButton(App):
+class MyBoxLayout(BoxLayout):
+    def __init__(self, **kwargs):
+        super(MyBoxLayout, self).__init__(**kwargs)
+        # Erstes Bild hinzufügen
+        self.add_widget(Image(source='sender.png'))
+        # Zweites Bild hinzufügen
+        self.add_widget(Image(source='receiver.png'))
 
-    def disable(self, instance, *args):
-        instance.disabled = True
+        # Hintergrundfarbe auf Weiß setzen
+        with self.canvas.before:
+            Color(1, 1, 1, 1)  # weiß
+            self.rect = Rectangle(size=self.size, pos=self.pos)
 
-    def update(self, instance, *args):
-        instance.text = "I am Disabled!"
+        self.bind(size=self._update_rect, pos=self._update_rect)
 
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+
+class MyKivyApp(App):
     def build(self):
-        mybtn = Button(text="Click me to disable", pos=(300,350), size_hint = (.25, .18))
-        mybtn.bind(on_press=partial(self.disable, mybtn))
-        mybtn.bind(on_press=partial(self.update, mybtn))
-        return mybtn
+        # Erstellen Sie das Layout
+        layout = MyBoxLayout(orientation='horizontal')
+        return layout
 
 
-KivyButton().run()
+if __name__ == '__main__':
+    MyKivyApp().run()
