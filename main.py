@@ -13,7 +13,8 @@ from kivy_garden.graph import LinePlot
 
 import strategies
 
-Window.maximize()
+# Window.maximize()
+Window.fullscreen = 'auto'
 
 Config.set('graphics', 'maxfps', '0')
 Config.write()
@@ -29,8 +30,8 @@ class MyGridLayout(Widget):
         self.qinit = 0
 
         if Window.size[0] < 2000:
-            self.smaller_font_size = 12
-            self.larger_font_size = 20
+            self.smaller_font_size = 20  # 12
+            self.larger_font_size = 30  # 20
         else:
             self.smaller_font_size = 24
             self.larger_font_size = 36
