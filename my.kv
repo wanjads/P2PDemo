@@ -1,0 +1,537 @@
+#:import Graph kivy.garden.graph
+
+<MyGridLayout>
+
+	GridLayout:
+		rows: 2
+		size: root.width, root.height
+
+		padding: 50
+		spacing: 20
+
+        background_color: (1, 1, 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        GridLayout:
+            cols: 2
+
+            GridLayout:
+                size_hint: 1.5, 1
+                rows: 3
+
+                RelativeLayout:
+                    id: relative
+
+                    Image:
+                        id: green_sender_paket
+                        source: "paket1.png"
+                        color: (1,1,1,1)
+                        pos_hint: {"x": - relative.size[0]/(1.5*root.width) + relative.size[0]/(2.26 * root.width),"y":0}
+
+                    Image:
+                        id: red_sender_paket
+                        source: "paket2.png"
+                        color: (1,1,1,0)
+                        pos_hint: {"x": - relative.size[0]/(1.5*root.width) + relative.size[0]/(2.26 * root.width),"y":0}
+
+                    Image:
+                        id: green_receiver_paket
+                        source: "paket1.png"
+                        color: (1,1,1,1)
+                        pos_hint: {"x": - relative.size[0]/(1.5*root.width) + relative.size[0]/(0.753 * root.width),"y":0}
+
+                    Image:
+                        id: red_receiver_paket
+                        source: "paket2.png"
+                        color: (1,1,1,0)
+                        pos_hint: {"x": - relative.size[0]/(1.5*root.width) + relative.size[0]/(0.753 * root.width),"y":0}
+
+                GridLayout:
+                    cols: 4
+                    rows: 2
+
+                    Image:
+                        id: process
+                        source: "process.png"
+
+                    Image:
+                        id: sender
+                        source: "bluebox.png"
+
+                    Image:
+                        id: channel
+                        source: "channel.png"
+
+                    Image:
+                        id: receiver
+                        source: "bluebox.png"
+
+                    Label:
+                        text: "Process"
+                        font_size: root.larger_font_size
+                        color: (0,0,0,1)
+
+                    Label:
+                        text: "Sender"
+                        font_size: root.larger_font_size
+                        color: (0,0,0,1)
+
+                    Label:
+                        text: ""
+
+                    Label:
+                        text: "Receiver"
+                        font_size: root.larger_font_size
+                        color: (0,0,0,1)
+
+                Button:
+                    text: "Start!"
+                    font_size: root.larger_font_size
+                    size_hint: 0.1, 0.2
+                    pos_hint: {"center_x":0.5}
+
+                    on_release: root.animate_it(self)
+
+
+            Graph:
+                id: graph
+                xlabel:'Time'
+                x_ticks_minor:5
+                x_ticks_major:1000
+                y_ticks_major:1
+                y_grid_label:True
+                x_grid_label:True
+                padding:30
+                x_grid:True
+                y_grid:True
+                xmin:-10000
+                xmax:0
+                ymin:0
+                ymax:10
+                label_options: {'color': (0,0,0,1), 'bold': True}
+                background_color: 1,1,1,1
+                tick_color: 0,0,0,1
+                border_color: 0,0,0,1
+
+        GridLayout:
+            rows: 2
+            cols: 2
+
+            GridLayout:
+                size_hint: 1.5, 0.6
+                cols:3
+                rows:3
+
+                Label:
+                    text: "Strategies"
+                    color: 0,0,0,1
+                    font_size: root.larger_font_size
+
+                Label:
+                    text: "System Parameters"
+                    color: 0,0,0,1
+                    font_size: root.larger_font_size
+
+                Label:
+                    text: "Speed"
+                    color: 0,0,0,1
+                    font_size: root.larger_font_size
+
+                GridLayout:
+                    cols: 2
+
+                    Label:
+                        size_hint: 0.5, 1
+                        text: ""
+
+                    GridLayout:
+                        rows: 5
+                        cols: 2
+
+                        padding: -30
+
+                        CheckBox:
+                            id: random_box
+                            active: True
+                            group: "strats"
+                            color: 0,0,0,1
+                            on_active: root.random_box(self)
+
+                        Label:
+                            text: "random"
+                            text_size: self.size
+                            halign: "left"
+                            valign: "middle"
+                            size_hint: 3, 1
+                            color: 0,0,0,1
+                            font_size: root.smaller_font_size
+
+                        CheckBox:
+                            id: TQL_box
+                            group: "strats"
+                            color: 0,0,0,1
+                            on_active: root.TQL_box(self)
+
+                        Label:
+                            text: "TQL"
+                            text_size: self.size
+                            halign: "left"
+                            valign: "middle"
+                            size_hint: 3, 1
+                            color: 0,0,0,1
+                            font_size: root.smaller_font_size
+
+                        CheckBox:
+                            id: QRS_box
+                            group: "strats"
+                            color: 0,0,0,1
+                            on_active: root.QRS_box(self)
+
+                        Label:
+                            text: "Q+RS"
+                            text_size: self.size
+                            halign: "left"
+                            valign: "middle"
+                            size_hint: 3, 1
+                            color: 0,0,0,1
+                            font_size: root.smaller_font_size
+
+                        CheckBox:
+                            id: TB_box
+                            group: "strats"
+                            color: 0,0,0,1
+                            on_active: root.TB_box(self)
+
+                        Label:
+                            text: "TB"
+                            text_size: self.size
+                            halign: "left"
+                            valign: "middle"
+                            size_hint: 3, 1
+                            color: 0,0,0,1
+                            font_size: root.smaller_font_size
+
+                        CheckBox:
+                            id: periodic_box
+                            group: "strats"
+                            color: 0,0,0,1
+                            on_active: root.periodic_box(self)
+
+                        Label:
+                            text: "periodic"
+                            text_size: self.size
+                            halign: "left"
+                            valign: "middle"
+                            size_hint: 3, 1
+                            color: 0,0,0,1
+                            font_size: root.smaller_font_size
+
+                GridLayout:
+                    size_hint: 2, 1
+                    rows: 4
+
+                    Slider:
+                        id: slider_p
+                        padding: 50
+                        min: 0.01
+                        max: 1
+                        step: 0.01
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: "Channel Quality: " + str(round(slider_p.value, 2))
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Slider:
+                        id: slider_lamb
+                        padding: 50
+                        min: 0.01
+                        max: 1
+                        step: 0.01
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: "Arrival Probability: " + str(round(slider_lamb.value, 2))
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Slider:
+                        id: slider_e
+                        padding: 50
+                        min: 0
+                        max: 10
+                        step: 0.1
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: "Energy Cost: " + str(round(slider_e.value, 1))
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Slider:
+                        id: slider_zeta
+                        padding: 50
+                        min: 1
+                        max: 20
+                        step: 1
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: "Risk Threshold: " + str(slider_zeta.value)
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                GridLayout:
+                    rows: 2
+
+                    Slider:
+                        id: slider_speed
+                        padding: 50
+                        min: -2
+                        max: 0.5
+                        step: 0.1
+                        value: 0.5
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: str(round(10 ** (-2 - slider_speed.value), 3)) + " sec per time step"
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                Label:
+                    id: strat_label
+                    text: "random transmission"
+                    color: 0,0,0,1
+                    font_size: root.smaller_font_size
+
+                Label:
+                    text: ""
+
+                Label:
+                    text: ""
+
+            GridLayout:
+                rows: 4
+
+                Label:
+                    text: "Legend"
+                    size_hint: 1, 0.4
+                    color: 0,0,0,1
+                    font_size: root.larger_font_size
+
+                GridLayout:
+                    rows: 4
+                    cols: 3
+
+                    CheckBox:
+                        id: cost_box
+                        color: 1,0,0,1
+                        active: True
+                        on_active: root.cost_box(self)
+
+                    Label:
+                        text: "Costs"
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Graph:
+                        id: legend_costs
+                        xmin:0
+                        xmax:1
+                        ymin:0
+                        ymax:2
+                        background_color: 1,1,1,1
+
+                    CheckBox:
+                        id: aoi_box
+                        color: 0,0,1,1
+                        active: True
+                        on_active: root.aoi_box(self)
+
+                    Label:
+                        text: "Age of Information"
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Graph:
+                        id: legend_aoi
+                        xmin:0
+                        xmax:1
+                        ymin:0
+                        ymax:2
+                        background_color: 1,1,1,1
+
+                    CheckBox:
+                        id: energy_box
+                        color: 0,1,0,1
+                        active: True
+                        on_active: root.energy_box(self)
+
+                    Label:
+                        text: "Transmission Energy"
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Graph:
+                        id: legend_energy
+                        xmin:0
+                        xmax:1
+                        ymin:0
+                        ymax:2
+                        background_color: 1,1,1,1
+
+                    CheckBox:
+                        id: risk_box
+                        color: 1,0,1,1
+                        active: True
+                        on_active: root.risk_box(self)
+
+                    Label:
+                        text: "Risky States"
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Graph:
+                        id: legend_risk
+                        xmin:0
+                        xmax:1
+                        ymin:0
+                        ymax:2
+                        background_color: 1,1,1,1
+
+                Label:
+                    text: "Graph Settings"
+                    size_hint: 1, 0.4
+                    color: 0,0,0,1
+                    font_size: root.larger_font_size
+
+                GridLayout:
+                    rows: 4
+                    cols: 2
+
+                    Slider:
+                        id: slider_range
+                        padding: 50
+                        min: 100
+                        max: 30000
+                        step: 100
+                        value: 10000
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: "x-range: " + str(int(slider_range.value))
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Slider:
+                        id: slider_yrange
+                        padding: 50
+                        min: 1
+                        max: 100
+                        step: 1
+                        value: 10
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: "y-range: " + str(int(slider_yrange.value))
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    Slider:
+                        id: slider_meanrange
+                        padding: 50
+                        min: 100
+                        max: 10000
+                        step: 100
+                        value: 5000
+                        orientation: 'horizontal'
+                        cursor_size: 20, 20
+
+                    Label:
+                        text: "moving average window: " + str(int(slider_meanrange.value))
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+                    CheckBox:
+                        id: avg_box
+                        color: 0,0,0,1
+                        active: True
+                        on_active: root.avg_box(self)
+
+                    Label:
+                        text: "moving averages"
+                        text_size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        size_hint: 1, 0.1
+                        color: 0,0,0,1
+                        font_size: root.smaller_font_size
+
+            Button:
+                id: parachange
+                text: "Adjust Parameters"
+                font_size: root.larger_font_size
+                size_hint: 1, 0.1
+
+                on_release: root.adjust(self)
+
+            Button:
+                id: graphchange
+                text: "Adjust Graph"
+                font_size: root.larger_font_size
+                size_hint: 1, 0.1
+
+                on_release: root.adjust_graph(self)
